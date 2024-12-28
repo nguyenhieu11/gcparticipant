@@ -20,10 +20,6 @@
         "id": "GCParticipant",
         "name": "gc-participant-name",
         "description": "gc participant description"
-      },
-      {
-        "command": "gcparticipant.helloWorld",
-        "title": "Hello World"
       }
     ]
   },
