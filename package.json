@@ -10,9 +10,17 @@
     "Other"
   ],
   "activationEvents": [],
+  "extensionDependencies": [
+    "github.copilot-chat"
+  ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
+    "chatParticipants": [
+      {
+        "id": "GCParticipant",
+        "name": "gc-participant-name",
+        "description": "gc participant description"
+      },
       {
         "command": "gcparticipant.helloWorld",
         "title": "Hello World"

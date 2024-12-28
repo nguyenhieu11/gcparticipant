@@ -6,21 +6,45 @@ import * as vscode from 'vscode';
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "gcparticipant" is now active!');
+	// Registar a chat participant
+	vscode.chat.createChatParticipant("GCParticipant", async (request, context, response, token) => {
+		const userQuery = request.prompt;
+		console.log("userQuery");
+		console.log(userQuery);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('gcparticipant.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from GCParticipant!');
+		const chatModels = await vscode.lm.selectChatModels({ family: 'gpt-4o' });
+
+		// const messages = [
+		// 	vscode.LanguageModelChatMessage.User(userQuery)
+		// ];
+
+		/** I think the input message in Copilot chat should be:
+		 * @gc-participant-name path_to_sequence_diagram_file_path
+		 * After that:
+		 * 	1/ Use fs to read data from this file
+		 * 	2/ Parse information
+		 * 	3/ Create request message for copilot
+		 * 	4/ Send to Copilot use `chatModels[0].sendRequest`
+		 * 	5/ Get response
+		 * 	6/ Repeat send/get....
+		 * 
+		 */
+
+		const messages = [
+			vscode.LanguageModelChatMessage.User("How the best way to create code " +
+				"from sequence diagram with Github Copilot?")
+		];
+
+		const chatRequest = await chatModels[0].sendRequest(messages, undefined, token);
+		let data = '';
+		for await (const token of chatRequest.text) {
+			response.markdown(token);
+			data += token;
+		}
+		console.log('data');
+		console.log(data);
 	});
-
-	context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
