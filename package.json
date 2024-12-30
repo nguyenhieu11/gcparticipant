@@ -18,8 +18,8 @@
     "chatParticipants": [
       {
         "id": "GCParticipant",
-        "name": "gc-participant-name",
-        "description": "gc participant description"
+        "name": "gc-emb-coe",
+        "description": "Input the config file path"
       }
     ]
   },

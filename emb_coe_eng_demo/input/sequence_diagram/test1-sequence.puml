@@ -1,0 +1,20 @@
+
+@startuml
+ 
+'Actors definition
+actor User
+ 
+'Participants declaration
+participant "ezNoobMessenger Server" as Server
+participant Contact
+participant "Target User"
+ 
+'User Activity
+User -> Server: Login()
+User -> Server: SendMessage()
+Server -> Contact: FindContact()
+Server -> "Target User": DeliverMessage()
+"Target User" -> Server: ReceiveMessage()
+Server -> User: Message Delivered
+ 
+@enduml
